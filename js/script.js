@@ -30,7 +30,7 @@ const getCoverPhoto = (coverId) => {
 };
 
 const getBooks = (searchText) => {
-    const bookUrl = `http://openlibrary.org/search.json?q=${searchText}`;
+    const bookUrl = `https://openlibrary.org/search.json?q=${searchText}`;
     fetch(bookUrl)
         .then(response => response.json())
         .then(data => handleData(data))
