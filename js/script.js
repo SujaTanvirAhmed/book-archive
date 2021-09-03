@@ -38,43 +38,54 @@ const getBooks = (searchText) => {
 };
 
 const handleData = data => {
-    // toggleLoader("on"); // loading animation starts
-    console.log(data.docs);
+    // Notification message
+    let msg = "Search failed! Connection error or invalid search-string!!";
+    // msg = `Showing ${part} of ${whole} entries`;
+
+    // Book serial counter
     let srlCounter = 0;
+
+    // Loop through each book
     data.docs.forEach(book => {
         srlCounter++;
         const trEl = document.createElement("tr");
 
+        // Book title
         if (!book.title) {
             trEl.dataset.title = "empty";
         } else {
             trEl.dataset.title = book.title;
         }
 
+        // Author name
         if (!book.author_name) {
             trEl.dataset.author_name = "empty";
         } else {
             trEl.dataset.author_name = getNames(book.author_name);
         }
 
+        // Publisher
         if (!book.publisher) {
             trEl.dataset.publisher = "empty";
         } else {
             trEl.dataset.publisher = getNames(book.publisher);
         }
 
+        // ISBN
         if (!book.isbn) {
             trEl.dataset.isbn = "empty";
         } else {
             trEl.dataset.isbn = book.isbn[0];
         }
 
+        // Cover photo
         if (!book.cover_i) {
             trEl.dataset.cover_i = "empty";
         } else {
             trEl.dataset.cover_i = book.cover_i;
         }
 
+        // Create row of result table
         const trElHtml =
             `<td>${srlCounter}</td>
             <td>${book.title}</td>
@@ -84,28 +95,32 @@ const handleData = data => {
         trEl.innerHTML = trElHtml;
         bookTableBody.appendChild(trEl);
     });
+
     toggleLoader("off");
     searchResult.style.display = "block";
 };
 
 // handle search button click
 searchButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    bookTableBody.innerHTML = "";
-    searchResult.style.display = "none";
-    let msg = "Search failed! Connection error or invalid search-string!!";
-    // msg = `Showing ${part} of ${whole} entries`;
-    const searchString = document.getElementById("search-txt").value;
-    if (searchString.trim().length > 0) { // if input given
+    event.preventDefault(); // prevents default form submission
+    const searchInput = document.getElementById("search-txt");
+    const searchString = searchInput.value;
+    if (searchString.trim().length === 0) { // if input is empty string
+        searchInput.value = "";
+    } else {
         toggleLoader("on");
+        bookTableBody.innerHTML = "";
+        searchResult.style.display = "none";
         getBooks(searchString);
-        // toggleLoader("off");
     }
 });
 
 // handle row click
 bookTableBody.addEventListener("click", (event) => {
+    // Book title
     document.getElementById("book-title").innerText = event.target.parentElement.dataset.title;
+
+    // Author name
     document.getElementById("author").innerText = event.target.parentElement.dataset.author_name;
 
     // ISBN
@@ -129,8 +144,13 @@ bookTableBody.addEventListener("click", (event) => {
         coverPhoto.style.display = "block";
     }
 
-    document.getElementById("publisher").innerText = event.target.parentElement.dataset.publisher;
+    // Publisher
+    const bookPublisher = event.target.parentElement.dataset.publisher;
+    if (bookPublisher === "empty") {
+        document.getElementById("publisher").innerText = "(Publisher unavailable!)";
+    } else {
+        document.getElementById("publisher").innerText = bookPublisher;
+    }
 
     bookCover.style.opacity = "1";
 });
-
