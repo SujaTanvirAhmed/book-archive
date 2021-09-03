@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Suja Tanvir Ahmed" />
+    <title>Book Archive</title>
+    <link rel="shortcut icon" href="./images/books-icon-16.png" type="image/png" />
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h1><span>Search</span> from Book Archive</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container pos-relative">
+            <div id="loader"></div>
+
+
+            <section class="d-grid">
+
+                <div class="search">
+
+                    <div class="search-query">
+                        <form>
+                            <input id="search-txt" type="text" placeholder="Search book" autofocus />
+                            <button id="search-btn" type="submit">Search</button>
+                        </form>
+                    </div><!-- .search-query -->
+
+                    <p id="message">Notification message</p>
+                    <div id="search-result" class="search-result">
+                        <table>
+                            <thead>
+                                <tr id="table-header">
+                                    <th>Serial</th>
+                                    <th>Book Name</th>
+                                    <th>Author</th>
+                                    <th>Publisher</th>
+                                    <th>First Published</th>
+                                </tr>
+                            </thead>
+                            <tbody id="book-table-body">
+                            </tbody>
+                        </table>
+                    </div><!-- #search-result -->
+
+                </div><!-- #search -->
+
+                <div id="book-cover" class="book-cover">
+                    <h3>Title: <span id="book-title">JavaScript Bible</span></h3>
+                    <h4>Author: <span id="author">Suja Tanvir Ahmed</span></h4>
+                    <h5>ISBN: <span id="isbn">3458959393883</span></h5>
+                    <img id="cover-photo" src="./images/books-icon.png" alt="Book Cover" />
+                    <div id="alt-cover">
+                        <p>(Cover photo unavailable!)</p>
+                        <h3 id="alt-title">Alt Cover<h3>
+                    </div>
+                    <p>Publisher: <span id="publisher">Gyankosh</span></p>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>Developed by <span>Suja Tanvir Ahmed</span></p>
+    </footer>
+
+    <!-- javascript -->
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
