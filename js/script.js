@@ -1,10 +1,10 @@
+const bookCardCont = document.getElementById("book-card-cont");
 const message = document.getElementById("message");
 let msg = "";
 const footer = document.getElementById("footer");
 const loader = document.getElementById("loader");
 const searchResult = document.getElementById("search-result");
 const searchButton = document.getElementById("search-btn");
-const bookTableBody = document.getElementById("book-table-body");
 const coverPhoto = document.getElementById("cover-photo");
 const altCover = document.getElementById("alt-cover");
 const bookCover = document.getElementById("book-cover");
@@ -74,53 +74,51 @@ const handleData = data => {
 
         // Loop through each book
         data.docs.forEach(book => {
-            srlCounter++;
-            const trEl = document.createElement("tr");
+            const bookCard = document.createElement("div");
 
             // Book title
             if (!book.title) {
-                trEl.dataset.title = "empty";
+                bookCard.dataset.title = "empty";
             } else {
-                trEl.dataset.title = book.title;
+                bookCard.dataset.title = book.title;
             }
 
             // Author name
             if (!book.author_name) {
-                trEl.dataset.author_name = "empty";
+                bookCard.dataset.author_name = "empty";
             } else {
-                trEl.dataset.author_name = getNames(book.author_name);
+                bookCard.dataset.author_name = getNames(book.author_name);
             }
 
             // Publisher
             if (!book.publisher) {
-                trEl.dataset.publisher = "empty";
+                bookCard.dataset.publisher = "empty";
             } else {
-                trEl.dataset.publisher = getNames(book.publisher);
+                bookCard.dataset.publisher = getNames(book.publisher);
             }
 
             // ISBN
             if (!book.isbn) {
-                trEl.dataset.isbn = "empty";
+                bookCard.dataset.isbn = "empty";
             } else {
-                trEl.dataset.isbn = book.isbn[0];
+                bookCard.dataset.isbn = book.isbn[0];
             }
 
             // Cover photo
             if (!book.cover_i) {
-                trEl.dataset.cover_i = "empty";
+                bookCard.dataset.cover_i = "empty";
             } else {
-                trEl.dataset.cover_i = book.cover_i;
+                bookCard.dataset.cover_i = book.cover_i;
             }
 
-            // Create row of result table
-            const trElHtml =
-                `<td>${srlCounter}</td>
-            <td>${book.title}</td>
-            <td>${book.author_name}</td>
-            <td>${book.publisher}</td>
-            <td>${book.first_publish_year}</td>`;
-            trEl.innerHTML = trElHtml;
-            bookTableBody.appendChild(trEl);
+            // card testing
+            bookCard.classList.add("book-card");
+            bookCard.innerHTML = `
+                <h3>${book.title}</h3>
+                <p>Written by: <span>${book.author_name}</span></p>
+                <p>Published by: <span>${book.publisher}</span></p>
+                <p>First published at: <span>${book.first_publish_year}</span></p>`;
+            bookCardCont.appendChild(bookCard);
         });
 
         searchResult.style.display = "block";
@@ -150,23 +148,32 @@ searchButton.addEventListener("click", (event) => {
         searchInput.value = "";
     } else {
         toggleLoader("on");
-        bookTableBody.innerHTML = "";
         searchResult.style.display = "none";
         bookCover.style.opacity = "0";
         getBooks(searchString);
     }
 });
 
-// handle row click
-bookTableBody.addEventListener("click", (event) => {
+// handle card click
+bookCardCont.addEventListener("click", event => {
+    const clickedItem = event.target;
+    let thisCard = undefined;
+    if (clickedItem.tagName === "H3" || clickedItem.tagName === "P") {
+        thisCard = clickedItem.parentElement;
+    } else if (clickedItem.tagName === "SPAN") {
+        thisCard = clickedItem.parentElement.parentElement;
+    } else if (clickedItem.tagName === "DIV") {
+        thisCard = clickedItem;
+    }
+
     // Book title
-    document.getElementById("book-title").innerText = event.target.parentElement.dataset.title;
+    document.getElementById("book-title").innerText = thisCard.dataset.title;
 
     // Author name
-    document.getElementById("author").innerText = event.target.parentElement.dataset.author_name;
+    document.getElementById("author").innerText = thisCard.dataset.author_name;
 
     // ISBN
-    const isbn = event.target.parentElement.dataset.isbn;
+    const isbn = thisCard.dataset.isbn;
     const dispIsbn = document.getElementById("isbn");
     if (isbn === "empty") {
         dispIsbn.innerText = "(ISBN unavailable!)";
@@ -175,9 +182,9 @@ bookTableBody.addEventListener("click", (event) => {
     }
 
     // Cover photo
-    const coverPhotoId = event.target.parentElement.dataset.cover_i;
+    const coverPhotoId = thisCard.dataset.cover_i;
     if (coverPhotoId === "empty") {
-        document.getElementById("alt-title").innerText = event.target.parentElement.dataset.title;
+        document.getElementById("alt-title").innerText = thisCard.dataset.title;
         coverPhoto.style.display = "none";
         altCover.style.display = "block";
     } else {
@@ -187,12 +194,12 @@ bookTableBody.addEventListener("click", (event) => {
     }
 
     // Publisher
-    const bookPublisher = event.target.parentElement.dataset.publisher;
+    const bookPublisher = thisCard.dataset.publisher;
     if (bookPublisher === "empty") {
         document.getElementById("publisher").innerText = "(Publisher unavailable!)";
     } else {
         document.getElementById("publisher").innerText = bookPublisher;
     }
-
     bookCover.style.opacity = "1";
+    console.log(thisCard);
 });

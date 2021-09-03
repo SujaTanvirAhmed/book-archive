@@ -102,31 +102,26 @@ form input, form button {
     display: none;
 }
 
-/* table */
-table {
-    width: 100%;
-    background-color: skyblue;
-    border-collapse: collapse;
+/* book card */
+#book-card-cont {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
 }
-table #table-header {
-    position: static;
-    width: 100%;
-}
-table tr {
-    cursor: pointer;
-    transition: ease-in-out;
-    transition-duration: 150ms;
-}
-table tr:hover {
-    background-color: #333;
-    color: #fff;
-}
-table, th, td {
+.book-card {
+    background-color: lightseagreen;
+    color: white;
     border: 1px solid gray;
+    border-radius: 5px;
+    padding: 15px;
 }
-th, td {
-    padding: 5px 10px;
+.book-card h3 {
     text-align: center;
+    margin-bottom: 10px;
+}
+.book-card span {
+    font-style: italic;
+    text-decoration: underline;
 }
 
 /* book cover */
