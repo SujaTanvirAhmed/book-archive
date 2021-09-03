@@ -152,6 +152,7 @@ searchButton.addEventListener("click", (event) => {
         toggleLoader("on");
         bookTableBody.innerHTML = "";
         searchResult.style.display = "none";
+        bookCover.style.opacity = "0";
         getBooks(searchString);
     }
 });
