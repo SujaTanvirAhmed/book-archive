@@ -60,7 +60,7 @@ header h1 span {
     top: 45px;
     text-align: left;
     padding: 5px 10px;
-    color: red;
+    opacity: 0;
 }
 
 /* search form */
