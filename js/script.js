@@ -1,5 +1,6 @@
 const message = document.getElementById("message");
 let msg = "";
+const footer = document.getElementById("footer");
 const loader = document.getElementById("loader");
 const searchResult = document.getElementById("search-result");
 const searchButton = document.getElementById("search-btn");
@@ -123,6 +124,7 @@ const handleData = data => {
         });
 
         searchResult.style.display = "block";
+        footer.style.position = "relative";
     }
 
     toggleLoader("off");
