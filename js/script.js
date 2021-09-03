@@ -142,6 +142,10 @@ const getBooks = (searchText) => {
 searchButton.addEventListener("click", (event) => {
     event.preventDefault(); // prevents default form submission
     toggleNotification("off");
+    bookCardCont.innerHTML = "";
+    coverPhoto.setAttribute("src", "#");
+    footer.style.position = "absolute";
+
     const searchInput = document.getElementById("search-txt");
     const searchString = searchInput.value;
     if (searchString.trim().length === 0) { // if input is empty string
