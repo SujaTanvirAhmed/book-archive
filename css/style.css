@@ -135,7 +135,7 @@ th, td {
     background-color: bisque;
     color: #333;
     border-radius: 5px;
-    opacity: 1;
+    overflow-y: scroll;
     border: 1px solid gray;
     opacity: 0;
 }

@@ -125,6 +125,7 @@ const handleData = data => {
 
         searchResult.style.display = "block";
         footer.style.position = "relative";
+        footer.style.bottom = "0";
     }
 
     toggleLoader("off");
